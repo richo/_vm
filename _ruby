@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require './manager'
+
+_ruby = Manager.new("ruby")
+_ruby.build
