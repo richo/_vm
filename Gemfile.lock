@@ -1,0 +1,10 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    shell-proxy (0.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  shell-proxy
