@@ -2,14 +2,14 @@ require 'shell-proxy'
 
 UNDERSCORE_VM_VERSION = "0.0.0"
 
-class Manager
+class Manager < ShellProxy
+  attr_reader :name
   def initialize(name)
     @name = name
   end
 
   def build(io = nil)
-  name = @name
-  ShellProxy.new.__main__(io) do
+  __main__(io) do
     def for_all(name, iter, &block)
       __for(bare("${__#{name}_LIST}"), iter, &block)
     end
