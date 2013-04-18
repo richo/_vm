@@ -1,7 +1,7 @@
 _vm
 ===
 
-A generic verion manager.
+A generic version manager.
 
 So far, I've generically reimplemented [chruby][1]. The only point of this
 experiment is to see whether or not machine generated posix shell is even sane.
