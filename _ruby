@@ -2,5 +2,9 @@
 
 require './manager'
 
-_ruby = Manager.new("ruby")
+class Ruby < Manager
+  include Plugin::List
+end
+
+_ruby = Ruby.new("ruby")
 _ruby.build

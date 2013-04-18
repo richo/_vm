@@ -2,7 +2,27 @@ require 'shell-proxy'
 
 UNDERSCORE_VM_VERSION = "0.0.0"
 
+module Plugin
+  def self.uuid
+    @current_id ||= 0
+    @current_id += 1
+    :"unique_plugin_method_#{@current_id}"
+  end
+end
+
+Dir[File.expand_path("../plugin/*", __FILE__)].each do |f|
+  require f
+end
+
 class Manager < ShellProxy
+  @@plugins = Hash.new { |h, k| h[k] = Array.new }
+
+  def self.add_hook(to, &block)
+    uuid = Plugin.uuid
+    @@plugins[to] << uuid
+    define_method(uuid, &block)
+  end
+
   attr_reader :name
   def initialize(name)
     @name = name
@@ -26,22 +46,11 @@ class Manager < ShellProxy
         c.when("-v|--version") do
           echo raw("_#{name} version #{UNDERSCORE_VM_VERSION}")
         end
-        c.when("") do
-          local bare("star")
-          for_all(name, "i") do
-            __if(raw("[[ \"$i\" == $#{name}_ROOT ]]")) do |ci|
-              ci.then do
-                __eval('star="*"')
-              end
-              ci.else do
-                __eval('star=" "')
-              end
-            end
-            echo raw(' $star $(basename $i)')
-          end
-        end
         c.when("system") do
           __eval("_#{name}_reset")
+        end
+        @@plugins[:main_case].each do |plugin|
+          self.send(plugin, c)
         end
         c.when("*") do
           for_all(name, "i") do
