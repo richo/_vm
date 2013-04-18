@@ -1,0 +1,3 @@
+[submodule "shell-proxy"]
+	path = shell-proxy
+	url = git://github.com/richo/shell-proxy.git
