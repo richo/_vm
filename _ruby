@@ -6,6 +6,8 @@ class Ruby < Manager
   include Plugin::List
   # Needs to be included last of the main_case plugins
   include Plugin::Set
+
+  include Plugin::Ruby::Use
 end
 
 _ruby = Ruby.new("ruby")

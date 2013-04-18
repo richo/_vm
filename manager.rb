@@ -11,9 +11,11 @@ module Plugin
     @current_id += 1
     :"unique_plugin_method_#{@current_id}"
   end
+  module Ruby
+  end
 end
 
-Dir[File.expand_path("../plugin/*.rb", __FILE__)].each do |f|
+Dir[File.expand_path("../plugin/**/*.rb", __FILE__)].each do |f|
   require f
 end
 
