@@ -17,10 +17,10 @@ class Manager < ShellProxy
     __function("_#{name}") do
       __case(raw("$1")) do |c|
         c.when("-h|--help") do
-          echo raw("usage: $0 [version] [opts]")
+          echo raw("usage: _#{name} [version] [opts]")
         end
         c.when("-v|--version") do
-          echo raw("$0 version #{UNDERSCORE_VM_VERSION}")
+          echo raw("_#{name} version #{UNDERSCORE_VM_VERSION}")
         end
         c.when("") do
           local bare("star")
