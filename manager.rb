@@ -13,7 +13,7 @@ module Plugin
   end
 end
 
-Dir[File.expand_path("../plugin/*", __FILE__)].each do |f|
+Dir[File.expand_path("../plugin/*.rb", __FILE__)].each do |f|
   require f
 end
 
