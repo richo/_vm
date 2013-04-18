@@ -13,7 +13,11 @@ class Manager < ShellProxy
     def for_all(name, iter, &block)
       __for(bare("${__#{name}_LIST}"), iter, &block)
     end
+    build_main
+  end
+  end
 
+  def build_main
     __function("_#{name}") do
       __case(raw("$1")) do |c|
         c.when("-h|--help") do
@@ -53,6 +57,5 @@ class Manager < ShellProxy
         end
       end
     end
-  end
   end
 end
