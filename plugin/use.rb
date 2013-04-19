@@ -10,6 +10,11 @@ module Plugin::Use
   end
 
   def use_common
+    __if(bare(%<[ -n #{root} ]>)) do |c|
+      c.then do
+        __eval("_#{name}_reset")
+      end
+    end
     __export("#{name}_ROOT", raw("$1"))
     __set("__#{name}_path_fragment", path_fragment)
     __export("PATH", raw("#{path_fragment}:$PATH"))
