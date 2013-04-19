@@ -8,6 +8,7 @@ class Ruby < Manager
   include Plugin::Set
 
   include Plugin::Ruby::Use
+  include Plugin::Reset
 end
 
 _ruby = Ruby.new("ruby")
