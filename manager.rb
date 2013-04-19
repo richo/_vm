@@ -31,6 +31,18 @@ class Manager < ShellProxy
     define_method(uuid, &block)
   end
 
+  def path_fragment
+    raw("#{root}/bin")
+  end
+
+  def root(type=nil)
+    if type == :var
+      raw("#{name}_ROOT")
+    else
+      raw("${#{name}_ROOT}")
+    end
+  end
+
   attr_reader :name
   def initialize(name)
     @name = name
