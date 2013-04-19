@@ -54,6 +54,9 @@ class Manager < ShellProxy
       __for(bare("${__#{name}_LIST}"), iter, &block)
     end
     build_main
+    @@plugins[:toplevel].each do |plugin|
+      self.send(plugin)
+    end
   end
   end
 
