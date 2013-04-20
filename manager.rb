@@ -1,8 +1,12 @@
-if File.exists? (shell_proxy_path = File.expand_path("../shell-proxy/lib", __FILE__))
+if File.exists?(shell_proxy_path = File.expand_path("../shell-proxy/lib", __FILE__))
   $:.unshift shell_proxy_path
 end
 require 'shell-proxy'
-require_relative 'path_fragment'
+%w[
+  path_fragment.rb
+].each do |f|
+  require File.expand_path("../#{f}", __FILE__)
+end
 
 UNDERSCORE_VM_VERSION = "0.0.0"
 
