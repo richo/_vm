@@ -8,6 +8,8 @@ module Plugin::Ruby::Use include Plugin::Use
           c.then do
             gem_path = raw("$HOME/.gem/$(basename $1)")
             __export("GEM_HOME", gem_path)
+            __export("GEM_ROOT", gem_path)
+            __export("GEM_PATH", gem_path)
             add_to_path(raw("#{gem_path}/bin"))
           end
         end
