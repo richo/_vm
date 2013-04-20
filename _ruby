@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require './manager'
+require File.expand_path('../manager', __FILE__)
 
 class Ruby < Manager
   include Plugin::List
