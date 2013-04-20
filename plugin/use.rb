@@ -2,11 +2,15 @@ module Plugin::Use
   def self.included(mod)
     if mod.is_a? Class
       mod.add_hook(:toplevel) do
-        __function("_#{name}_use") do
+        main_fn do
           use_common
         end
       end
     end
+  end
+
+  def main_fn(&block)
+    __function("_#{name}_use", &block)
   end
 
   def use_common
