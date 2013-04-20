@@ -2,6 +2,7 @@ if File.exists? (shell_proxy_path = File.expand_path("../shell-proxy/lib", __FIL
   $:.unshift shell_proxy_path
 end
 require 'shell-proxy'
+require_relative 'path_fragment'
 
 UNDERSCORE_VM_VERSION = "0.0.0"
 
@@ -23,16 +24,14 @@ Dir[File.expand_path("../plugin/**/*.rb", __FILE__)].each do |f|
 end
 
 class Manager < ShellProxy
+  include FragmentManager
+
   @@plugins = Hash.new { |h, k| h[k] = Array.new }
 
   def self.add_hook(to, &block)
     uuid = Plugin.uuid
     @@plugins[to] << uuid
     define_method(uuid, &block)
-  end
-
-  def path_fragment
-    raw("#{root}/bin")
   end
 
   def root(type=nil)

@@ -3,11 +3,11 @@ module Plugin::Reset
     mod.add_hook(:toplevel) do
       __function("_#{name}_reset") do
 
-        __if(bare(%<[ -n "#{path_fragment}" ]>)) do |c|
+        __if(bare(%<[ -n "#{fragment}" ]>)) do |c|
           c.then do
             # XXX This needs a command stack to work out where to put the results
             __eval(%<export PATH=$(echo "${PATH}"| sed \
--e "s|#{path_fragment}||" \
+-e "s|#{fragment}||" \
 -e "s|::|:|" \
 -e "s|^:||" \
 -e "s|:$||")>)

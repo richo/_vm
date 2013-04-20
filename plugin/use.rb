@@ -20,7 +20,6 @@ module Plugin::Use
       end
     end
     __export("#{name}_ROOT", raw("$1"))
-    __set("__#{name}_path_fragment", path_fragment)
-    __export("PATH", raw("#{path_fragment}:$PATH"))
+    add_to_path("${#{name}_ROOT}/bin")
   end
 end
