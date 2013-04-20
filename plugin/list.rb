@@ -4,7 +4,7 @@ module Plugin::List
       c.when("") do
         local bare("star")
         for_all(name, "i") do
-          __if(raw("[[ \"$i\" == $#{name}_ROOT ]]")) do |ci|
+          __if(raw(%<[ "$i" = "#{root}" ]>)) do |ci|
             ci.then do
               __eval('star="*"')
             end
