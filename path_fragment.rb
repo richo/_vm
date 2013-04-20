@@ -28,4 +28,9 @@ module FragmentManager
   def add_fragment_to_path
     __export("PATH", raw("#{fragment}:$PATH"))
   end
+
+  def reset_fragment
+    remove_fragment_from_path
+    __set(fragment(:var), bare("''"))
+  end
 end
