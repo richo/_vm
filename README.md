@@ -66,7 +66,13 @@ elektra ⚡ _ruby
 elektra ⚡
 ```
 
-However, building a _vm for other languages should be trivial.
+# Other platforms
+
+I would love to know how to make this work with other languages/platforms.
+
+I basically just need to know what environment variables the language expects
+to see (and a link to a convenient way to get/build the binaries would be nice).
+Feel free to [open an issue](https://github.com/richo/_vm/issues)
 
 
 [1]: https://github.com/postmodern/chruby
