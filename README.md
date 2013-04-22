@@ -36,7 +36,11 @@ submodule, which _vm checks for before doing a (very expensive) rubygems lookup.
 
 If you don't want to pull in the ruby dependencies, you can fetch the current versions from
 
-`https://raw.github.com/richo/_vm/latest/dist/_${language}`
+`https://raw.github.com/richo/_vm/latest/dist/_${language}`, ie
+
+* ruby: https://raw.github.com/richo/_vm/latest/dist/_ruby
+* php: https://raw.github.com/richo/_vm/latest/dist/_php
+* python: https://raw.github.com/richo/_vm/latest/dist/_python
 
 Which will always include the latest release.
 
