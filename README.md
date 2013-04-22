@@ -32,6 +32,14 @@ eval "`ruby _ruby`"
 If you want to rebuild _vm at runtime, you should install shell-proxy as a
 submodule, which _vm checks for before doing a (very expensive) rubygems lookup.
 
+# Installing
+
+If you don't want to pull in the ruby dependencies, you can fetch the current versions from
+
+`https://raw.github.com/richo/_vm/latest/dist/_${language}`
+
+Which will always include the latest release.
+
 # Current Status
 
 Currently, I've implemented a version manager for ruby. You can get it by
