@@ -29,7 +29,7 @@ Created a tag and updated branch latest
 If all looks good, you can push this out with:
 
 git push --tags
-git push origin refs/heads/latest:refs/heads/latest
+git push -f origin refs/heads/latest:refs/heads/latest
 
 and then return to the master branch with:
 
