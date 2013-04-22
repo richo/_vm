@@ -51,7 +51,7 @@ class Manager < ShellProxy
     end
 
     self.send(:define_method, (:"add_fragment_to_#{fragment_name}")) do
-      __export("PATH", raw("#{fragment}:$PATH"))
+      __export(fragment_name, raw("#{fragment}:${#{fragment_name}}"))
     end
 
     self.send(:define_method, (:"reset_fragment_for_#{fragment_name}")) do
