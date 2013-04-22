@@ -86,6 +86,11 @@ I basically just need to know what environment variables the language expects
 to see (and a link to a convenient way to get/build the binaries would be nice).
 Feel free to [open an issue](https://github.com/richo/_vm/issues)
 
+# Credits
+
+* [@mpapis](https://twitter.com/mpapis): For the original skype call that lead me down this train of thought.
+* [@postmodern](https://twitter.com/postmodern_mod3): For [chruby][1], from which most of the core was directly derived.
+
 
 [1]: https://github.com/postmodern/chruby
 [2]: https://github.com/richo/shell-proxy
