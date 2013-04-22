@@ -46,9 +46,12 @@ class Manager < ShellProxy
     end
   end
 
-  attr_reader :name
-  def initialize(name)
-    @name = name
+  def self.name(n)
+    @@name = n
+  end
+
+  def name
+    @@name
   end
 
   def build(io = nil)

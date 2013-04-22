@@ -11,5 +11,5 @@ class Php < Manager
   include Plugin::Reset
 end
 
-_php = Php.new("php")
+_php = Php.new
 _php.build

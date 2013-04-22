@@ -3,6 +3,8 @@
 require File.expand_path('../manager', __FILE__)
 
 class Ruby < Manager
+  name "ruby"
+
   include Plugin::List
   # Needs to be included last of the main_case plugins
   include Plugin::Set
@@ -11,5 +13,5 @@ class Ruby < Manager
   include Plugin::Ruby::Reset
 end
 
-_ruby = Ruby.new("ruby")
+_ruby = Ruby.new
 _ruby.build
