@@ -2,11 +2,6 @@ if File.exists?(shell_proxy_path = File.expand_path("../../shell-proxy/lib", __F
   $:.unshift shell_proxy_path
 end
 require 'shell-proxy'
-%w[
-  path_fragment.rb
-].each do |f|
-  require File.expand_path("../#{f}", __FILE__)
-end
 
 UNDERSCORE_VM_VERSION = "0.0.0"
 
@@ -28,10 +23,42 @@ Dir[File.expand_path("../plugin/**/*.rb", __FILE__)].each do |f|
 end
 
 class Manager < ShellProxy
-  include FragmentManager
-
   @@plugins = Hash.new { |h, k| h[k] = Array.new }
   @@name = nil
+
+  # include FragmentManager
+  def self.create_fragment(fragment_name)
+    fragment = raw("${_#{@@name}_#{fragment_name}_fragment}")
+    fragment_var = bare("_#{@@name}_#{fragment_name}_fragment")
+
+
+    self.send(:define_method, (:"add_to_#{fragment_name}")) do |path|
+      send(:"remove_fragment_from_#{fragment_name}")
+      __set(fragment_var, raw("#{fragment}:#{path}"))
+      send(:"add_fragment_to_#{fragment_name}")
+    end
+
+    self.send(:define_method, (:"remove_fragment_from_#{fragment_name}")) do
+      __if(bare(%<[ -n "#{fragment}" ]>)) do |c|
+        c.then do
+          __eval(%<export PATH=$(echo "${PATH}"| sed \
+  -e "s|#{fragment}||" \
+  -e "s|::|:|" \
+  -e "s|^:||" \
+  -e "s|:$||")>)
+        end
+      end
+    end
+
+    self.send(:define_method, (:"add_fragment_to_#{fragment_name}")) do
+      __export("PATH", raw("#{fragment}:$PATH"))
+    end
+
+    self.send(:define_method, (:"reset_fragment_for_#{fragment_name}")) do
+      send(:"remove_fragment_from_#{fragment_name}")
+      __set(fragment_var, bare("''"))
+    end
+  end
 
   def self.add_hook(to, &block)
     uuid = Plugin.uuid
@@ -58,6 +85,7 @@ class Manager < ShellProxy
   attr_reader :io
   def initialize(io=nil)
     @io = io
+    self.class.create_fragment("PATH")
   end
 
   def build

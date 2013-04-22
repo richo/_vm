@@ -20,6 +20,6 @@ module Plugin::Use
       end
     end
     __export("#{name}_ROOT", raw("$1"))
-    add_to_path("${#{name}_ROOT}/bin")
+    add_to_PATH("${#{name}_ROOT}/bin")
   end
 end

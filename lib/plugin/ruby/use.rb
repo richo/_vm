@@ -10,7 +10,7 @@ module Plugin::Ruby::Use include Plugin::Use
             __export("GEM_HOME", gem_path)
             __export("GEM_ROOT", gem_path)
             __export("GEM_PATH", gem_path)
-            add_to_path(raw("#{gem_path}/bin"))
+            add_to_PATH(raw("#{gem_path}/bin"))
           end
         end
       end
