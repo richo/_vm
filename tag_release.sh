@@ -22,3 +22,16 @@ git add dist
 git commit -m "Add dist files for ${release_series}${current_release}"
 
 git tag -s ${release_series}${current_release} -m "Release ${release_series}${current_release}"
+git update-ref refs/heads/latest HEAD
+
+cat <<EOF
+Created a tag and updated branch latest
+If all looks good, you can push this out with:
+
+git push --tags
+git push origin refs/heads/latest:refs/heads/latest
+
+and then return to the master branch with:
+
+git checkout master
+EOF
