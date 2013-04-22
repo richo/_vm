@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require './manager'
+
+class Python < Manager
+  name "python"
+  include Plugin::List
+  # Needs to be included last of the main_case plugins
+  include Plugin::Set
+
+  include Plugin::Reset
+  include Plugin::Use
+end
+
+_python = Python.new
+_python.build
