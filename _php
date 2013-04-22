@@ -3,6 +3,7 @@
 require File.expand_path('../lib/manager', __FILE__)
 
 class Php < Manager
+  name "php"
   include Plugin::List
   # Needs to be included last of the main_case plugins
   include Plugin::Set
