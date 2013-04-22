@@ -54,7 +54,12 @@ class Manager < ShellProxy
     @@name
   end
 
-  def build(io = nil)
+  attr_reader :io
+  def initialize(io=nil)
+    @io = io
+  end
+
+  def build
   __main__(io) do
     def for_all(name, iter, &block)
       __for(bare("${__#{name}_LIST}"), iter, &block)
