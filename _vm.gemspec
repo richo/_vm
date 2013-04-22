@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   #s.add_development_dependency "rspec"
 
   s.files         = `git ls-files`.split("\n")
-  s.require_paths = ["."]
+  s.require_paths = ["lib"]
 
   if ENV['GEM_PRIVATE_KEY']
     s.signing_key = "#{ENV['GEM_PRIVATE_KEY']}/gem-private_key.pem"

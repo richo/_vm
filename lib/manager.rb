@@ -1,4 +1,4 @@
-if File.exists?(shell_proxy_path = File.expand_path("../shell-proxy/lib", __FILE__))
+if File.exists?(shell_proxy_path = File.expand_path("../../shell-proxy/lib", __FILE__))
   $:.unshift shell_proxy_path
 end
 require 'shell-proxy'
