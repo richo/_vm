@@ -32,6 +32,13 @@ submodule, which _vm checks for before doing a (very expensive) rubygems lookup.
 
 # Installing
 
+\_vm uses the environment variable `__name_LIST` (ie, `__php_LIST`) to find versions. in my .zshrc I have:
+
+```bash
+__php_LIST=~/.php/versions/*
+__ruby_LIST=~/.rvm/rubies/*
+```
+
 If you don't want to pull in the ruby dependencies, you can fetch the current versions from
 
 `https://raw.github.com/richo/_vm/latest/dist/_${language}`, ie
