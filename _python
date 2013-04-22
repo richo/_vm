@@ -4,12 +4,14 @@ require File.expand_path('../lib/manager', __FILE__)
 
 class Python < Manager
   name "python"
+
+  create_fragment("PYTHONPATH")
   include Plugin::List
   # Needs to be included last of the main_case plugins
   include Plugin::Set
 
-  include Plugin::Reset
-  include Plugin::Use
+  include Plugin::Python::Reset
+  include Plugin::Python::Use
 end
 
 _python = Python.new
