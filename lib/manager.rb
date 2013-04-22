@@ -31,6 +31,7 @@ class Manager < ShellProxy
   include FragmentManager
 
   @@plugins = Hash.new { |h, k| h[k] = Array.new }
+  @@name = nil
 
   def self.add_hook(to, &block)
     uuid = Plugin.uuid
@@ -51,7 +52,7 @@ class Manager < ShellProxy
   end
 
   def name
-    @@name
+    @@name || self.class.to_s.downcase
   end
 
   attr_reader :io
