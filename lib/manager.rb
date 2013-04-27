@@ -41,7 +41,7 @@ class Manager < ShellProxy
         c.then do
           __eval(%<export PATH=$(echo "${PATH}"| sed \
   -e "s|#{fragment}||" \
-  -e "s|::|:|" \
+  -e "s|::|:|g" \
   -e "s|^:||" \
   -e "s|:$||")>)
         end
