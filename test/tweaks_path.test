@@ -6,7 +6,7 @@ ruby test/generic > .test/$$.sh
 
 __generic_LIST="foo bar baz"
 echo $PATH | grep -v "foo/bin"
-_generic foo
+,generic foo
 echo $PATH | grep "foo/bin"
-_generic system
+,generic system
 echo $PATH | grep -v "foo/bin"
