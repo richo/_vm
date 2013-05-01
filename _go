@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../lib/manager', __FILE__)
+
+class Go < Manager
+  name "go"
+  create_fragment "GOPATH"
+  include Plugin::List
+  # Needs to be included last of the main_case plugins
+  include Plugin::Set
+
+  include Plugin::Go::Use
+  include Plugin::Go::Reset
+end
+
+_go = Go.new
+_go.build
