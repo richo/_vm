@@ -20,7 +20,7 @@ Dir[File.expand_path("../plugin/**/*.rb", __FILE__)].each do |f|
   require f
 end
 
-class Manager < ShellProxy
+class Manager
   @@plugins = Hash.new { |h, k| h[k] = Array.new }
   @@name = nil
 

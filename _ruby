@@ -3,6 +3,8 @@
 require File.expand_path('../lib/manager', __FILE__)
 
 class Ruby < Manager
+  include PosixProxy
+
   name "ruby"
 
   include Plugin::List

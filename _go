@@ -3,6 +3,8 @@
 require File.expand_path('../lib/manager', __FILE__)
 
 class Go < Manager
+  include PosixProxy
+
   name "go"
   create_fragment "GOPATH"
   include Plugin::List
