@@ -83,6 +83,12 @@ elektra ⚡ _ruby
 elektra ⚡
 ```
 
+The `_vm` wide default is to expose functions called `_foo`, however the
+managers that `_vm` ships with use `$_VM_PREFIX` as an override- especially
+with ZSH you will want to override it.
+
+I use `_VM_PREFIX=,`
+
 # Other platforms
 
 I would love to know how to make this work with other languages/platforms.
