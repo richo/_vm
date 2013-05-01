@@ -1,0 +1,10 @@
+#!/bin/sh
+. "test/setup"
+
+ruby test/generic > .test/$$.sh
+. .test/$$.sh
+
+__generic_LIST="foo bar baz"
+echo $PATH | grep -v "foo/bin"
+_generic foo
+echo $PATH | grep "foo/bin"

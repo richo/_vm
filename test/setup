@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+mkdir -p .test
+cleanup() { rm -rf .test; }
+trap cleanup EXIT
+
+exec 1>/dev/null

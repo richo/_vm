@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../../lib/manager', __FILE__)
+
+class Generic < Manager
+  include PosixProxy
+
+  name "generic"
+
+  include Plugin::List
+  # Needs to be included last of the main_case plugins
+  include Plugin::Set
+
+  include Plugin::Use
+  include Plugin::Reset
+end
+
+_generic = Generic.new
+_generic.build

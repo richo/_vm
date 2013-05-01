@@ -1,0 +1,16 @@
+#!/bin/sh
+
+retval=0
+
+git submodule update --init
+
+for i in $(ls test | grep "\.test$"); do
+    if sh test/$i; then
+        echo "-> PASS $i"
+    else
+        echo "=> FAIL $i"
+        retval=1
+    fi
+done
+
+exit $retval
