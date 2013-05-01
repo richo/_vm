@@ -6,10 +6,10 @@ module Plugin::List
         for_all(name, "i") do
           __if(raw(%<[ "$i" = "#{root}" ]>)) do |ci|
             ci.then do
-              __eval('star="*"')
+              __set('star', "*")
             end
             ci.else do
-              __eval('star=" "')
+              __set('star', " ")
             end
             end
           echo raw(' $star $(basename $i)')
