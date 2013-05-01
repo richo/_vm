@@ -16,7 +16,7 @@ module Plugin::Use
   def use_common
     __if(bare(%<[ -n #{root} ]>)) do |c|
       c.then do
-        __eval("_#{name}_reset")
+        __call("_#{name}_reset")
       end
     end
     __export("#{name}_ROOT", raw("$1"))

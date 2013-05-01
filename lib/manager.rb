@@ -40,6 +40,8 @@ class Manager
     self.send(:define_method, (:"remove_fragment_from_#{fragment_name}")) do
       __if(bare(%<[ -n "#{fragment}" ]>)) do |c|
         c.then do
+          # Convert this to a __call via CmdStub
+          # TODO Make the sed magic a __replace on PosixProxy
           __eval(%<export PATH=$(echo "${PATH}"| sed \
   -e "s|#{fragment}||" \
   -e "s|::|:|g" \
@@ -113,7 +115,7 @@ class Manager
           echo raw("_#{name} version #{UNDERSCORE_VM_VERSION}")
         end
         c.when("system") do
-          __eval("_#{name}_reset")
+          __call("_#{name}_reset")
         end
         @@plugins[:main_case].each do |plugin|
           self.send(plugin, c)

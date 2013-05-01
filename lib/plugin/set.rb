@@ -6,7 +6,7 @@ module Plugin::Set
           __if(raw(%<[ `basename \"$i\"` = "$1" ]>)) do |ci|
             ci.then do
               shift
-              __eval("_#{name}_use \"$i\" \"$*\"")
+              __call("_#{name}_use", raw("$i"), raw("$*"))
               __return(raw("$?"))
             end
           end
