@@ -23,6 +23,7 @@ end
 class Manager
   @@plugins = Hash.new { |h, k| h[k] = Array.new }
   @@name = nil
+  @@prefix = "_"
 
   # include FragmentManager
   def self.create_fragment(fragment_name)
@@ -64,6 +65,10 @@ class Manager
     define_method(uuid, &block)
   end
 
+  def self.set_prefix(prefix)
+    @@prefix = prefix
+  end
+
   def root(type=nil)
     if type == :var
       raw("#{name}_ROOT")
@@ -99,7 +104,7 @@ class Manager
   end
 
   def build_main
-    __function("_#{name}") do
+    __function("#{@@prefix}#{name}") do
       __case(raw("$1")) do |c|
         c.when("-h|--help") do
           echo raw("usage: _#{name} [version] [opts]")
