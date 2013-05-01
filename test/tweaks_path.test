@@ -8,3 +8,5 @@ __generic_LIST="foo bar baz"
 echo $PATH | grep -v "foo/bin"
 _generic foo
 echo $PATH | grep "foo/bin"
+_generic system
+echo $PATH | grep -v "foo/bin"
