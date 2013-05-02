@@ -6,7 +6,7 @@ module Plugin::Python
           use_common
           __if(%<[ $UID -gt 0 ]>) do |c|
             c.then do
-              python_path = raw("$HOME/.pip/$(basename $1)")
+              python_path = raw("$HOME/.pip/$(basename #{args[1]})")
               add_to_PYTHONPATH(python_path)
             end
           end

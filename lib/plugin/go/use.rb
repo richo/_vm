@@ -5,7 +5,7 @@ module Plugin
         mod.add_hook(:toplevel) do
           main_use_fn do
             use_common
-            add_to_GOPATH(raw("$1/go"))
+            add_to_GOPATH("#{args[1]}/go")
           end
         end
       end

@@ -107,7 +107,7 @@ class Manager
 
   def build_main
     __function("#{@@prefix}#{name}") do
-      __case(raw("$1")) do |c|
+      __case(args[1]) do |c|
         c.when("-h|--help") do
           echo raw("usage: _#{name} [version] [opts]")
         end

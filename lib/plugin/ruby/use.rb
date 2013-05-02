@@ -4,10 +4,10 @@ module Plugin::Ruby
       mod.add_hook(:toplevel) do
         main_use_fn do
           use_common
-          __export("RUBYOPT", raw("$2"))
+          __export("RUBYOPT", args[2])
           __if(%<[ $UID -gt 0 ]>) do |c|
             c.then do
-              gem_path = raw("$HOME/.gem/$(basename $1)")
+              gem_path = raw("$HOME/.gem/$(basename #{args[1]})")
               __export("GEM_HOME", gem_path)
               __export("GEM_ROOT", gem_path)
               __export("GEM_PATH", gem_path)
