@@ -16,7 +16,7 @@ module Plugin::Reset
 
   def reset_common
     reset_fragment_for_PATH
-    __if(bare(%<[ -n "#{root}" ]>)) do |c|
+    __if(__set?(root)) do |c|
       c.then do
         __unset(root :var)
       end
