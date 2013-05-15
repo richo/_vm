@@ -14,7 +14,7 @@ current_release=$(( $current_release + 1 ))
 git checkout HEAD^0
 
 mkdir dist
-for i in _*; do
+for i in $(git ls-files -- "_*"); do
     ruby $i > dist/$i
     [ $? -eq 0 ] || exit 1
 done
