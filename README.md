@@ -49,6 +49,22 @@ If you don't want to pull in the ruby dependencies, you can fetch the current ve
 
 Which will always include the latest release.
 
+# Contrib Modules
+
+There are examples, as well as optional modules you may want, included in the
+repo, for example requiring the `prompt.rb` in `contrib` will give you access
+to
+
+```ruby
+include Contrib::Prompt
+```
+
+to give you a function suitable for including current version in your prompt, eg
+
+```bash
+_ruby prompt # "system" or "2.0.0-p195" etc
+```
+
 # Current Status
 
 Currently, I've implemented a version manager for ruby. You can get it by
