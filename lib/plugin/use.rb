@@ -14,7 +14,7 @@ module Plugin::Use
   end
 
   def use_common
-    __if(bare(%<[ -n #{root} ]>)) do |c|
+    __if(__set?(root)) do |c|
       c.then do
         __call("_#{name}_reset")
       end
