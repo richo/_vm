@@ -4,7 +4,7 @@ module Plugin::List
       c.when("") do
         local bare("star")
         for_all(name, "i") do
-          __if(cmp("$i", String).eq(root)) do |ci|
+          __if(cmp(raw("$i"), String).eq(root)) do |ci|
             ci.then do
               __set('star', "*")
             end
