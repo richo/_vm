@@ -13,7 +13,7 @@ require File.expand_path('../lib/manager', __FILE__)
 class <%= class_name %> < Manager
   include <%= proxy_type %>
 
-  name <%= name %>
+  name "<%= name %>"
   set_prefix "${_VM_PREFIX:-_}"
 
   include Plugin::List
