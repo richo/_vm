@@ -20,8 +20,8 @@ class <%= class_name %> < Manager
   # Needs to be included last of the main_case plugins
   include Plugin::Set
 
-  include Plugin::Ruby::Use
-  include Plugin::Ruby::Reset
+  include Plugin::Use
+  include Plugin::Reset
 end
 
 _<%= name %> = <%= class_name %>.new
