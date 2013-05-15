@@ -3,7 +3,7 @@ module Plugin::Set
     mod.add_hook(:main_case) do |c|
       c.when("*") do
         for_all(name, "i") do
-          __if(cmp(raw("`basename \"$i\"`"), String).eq(args[1])) do |ci|
+          __if(cmp(raw(basename raw("$i")), String).eq(args[1])) do |ci|
             ci.then do
               shift
               __call("_#{name}_use", raw("$i"), raw("$*"))
