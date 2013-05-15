@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 require 'erb'
 name = ARGV[0]
-class_name = name[0].upcase
-class_name << name[1..-1]
+class_name = name.capitalize
 
 proxy_type = ARGV[1] || "PosixProxy"
 
