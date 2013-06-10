@@ -40,13 +40,12 @@ class Manager
     self.send(:define_method, (:"remove_fragment_from_#{fragment_name}")) do
       __if(bare(%<[ -n "#{fragment}" ]>)) do |c|
         c.then do
-          # Convert this to a __call via CmdStub
-          # TODO Make the sed magic a __replace on PosixProxy
-          __eval(%<export PATH=$(echo "${PATH}"| sed \
-  -e "s|#{fragment}||" \
-  -e "s|::|:|g" \
-  -e "s|^:||" \
-  -e "s|:$||")>)
+          r = replace(fragment).with("")
+          r.and("::").with(":")
+          r.and("^:").with("")
+          r.and(":$").with("")
+
+          __export("PATH", r.exec("$PATH"))
         end
       end
     end
