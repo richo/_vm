@@ -1,0 +1,74 @@
+,python() {
+  case "$1" in
+    -h|--help)
+      echo "usage: _python [version] [opts]"
+    ;;
+    -v|--version)
+      echo "_python version 0.0.6"
+    ;;
+    system)
+      _python_reset
+    ;;
+    "")
+      local star
+      for i in ${__python_LIST}; do
+        if [ "$i" = "${python_ROOT}" ]
+        then
+          star='*'
+        else
+          star=' '
+        fi
+        echo " $star $(basename $i)"
+      done
+    ;;
+    *)
+      for i in ${__python_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          shift
+          _python_use "$i" "$*"
+          return "$?"
+        fi
+      done
+      echo "_python: unknown python: $1"
+    ;;
+  esac
+}
+_python_reset() {
+  if [ -n "${_python_PATH_fragment}" ]
+  then
+    export PATH=$(echo "$PATH" | \sed -e "s|${_python_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+  fi
+  _python_PATH_fragment=''
+  if [ -n "${python_ROOT}" ]
+  then
+    unset python_ROOT
+  fi
+  if [ -n "${_python_PYTHONPATH_fragment}" ]
+  then
+    export PATH=$(echo "$PATH" | \sed -e "s|${_python_PYTHONPATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+  fi
+  _python_PYTHONPATH_fragment=''
+}
+_python_use() {
+  if [ -n "${python_ROOT}" ]
+  then
+    _python_reset
+  fi
+  export python_ROOT="$1"
+  if [ -n "${_python_PATH_fragment}" ]
+  then
+    export PATH=$(echo "$PATH" | \sed -e "s|${_python_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+  fi
+  _python_PATH_fragment="${_python_PATH_fragment}:${python_ROOT}/bin"
+  export PATH="${_python_PATH_fragment}:${PATH}"
+  if [ "$UID" -gt 0 ]
+  then
+    if [ -n "${_python_PYTHONPATH_fragment}" ]
+    then
+      export PATH=$(echo "$PATH" | \sed -e "s|${_python_PYTHONPATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+    fi
+    _python_PYTHONPATH_fragment="${_python_PYTHONPATH_fragment}:$HOME/.pip/$(basename $1)"
+    export PYTHONPATH="${_python_PYTHONPATH_fragment}:${PYTHONPATH}"
+  fi
+}
