@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = "_vm"
-  s.version     = "0.0.3"
+  s.version     = "0.0.6"
   s.authors     = ["Richo Healey"]
   s.email       = ["richo@psych0tik.net"]
   s.homepage    = "http://github.com/richo/_vm"
