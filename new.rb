@@ -13,7 +13,7 @@ class <%= class_name %> < Manager
   include <%= proxy_type %>
 
   name "<%= name %>"
-  set_prefix "${_VM_PREFIX:-_}"
+  set_prefix "_"
 
   include Plugin::List
   # Needs to be included last of the main_case plugins

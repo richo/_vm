@@ -6,7 +6,7 @@ class Python < Manager
   include PosixProxy
 
   name "python"
-  set_prefix "${_VM_PREFIX:-_}"
+  set_prefix ","
 
   create_fragment("PYTHONPATH")
   include Plugin::List

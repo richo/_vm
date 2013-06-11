@@ -99,11 +99,11 @@ elektra ⚡ _ruby
 elektra ⚡
 ```
 
-The `_vm` wide default is to expose functions called `_foo`, however the
-managers that `_vm` ships with use `$_VM_PREFIX` as an override- especially
-with ZSH you will want to override it.
-
-I use `_VM_PREFIX=,`
+The scripts that ship with `_vm` will use `_` as the prefix, in order to expose
+managers called `_foo` etc, however if you want to use something else
+(Especially on ZSH, which reserves `_foo` as the completion function for
+`foo`), you should consider changing the prefix in the manager to something
+else. I use `,`.
 
 # Other platforms
 
