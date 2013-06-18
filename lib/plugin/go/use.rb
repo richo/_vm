@@ -5,7 +5,7 @@ module Plugin
         mod.add_hook(:toplevel) do
           main_use_fn do
             use_common
-            add_to_GOPATH("#{args[1]}/go")
+            __export("GOROOT", root)
           end
         end
       end

@@ -5,7 +5,7 @@ module Plugin
         mod.add_hook(:toplevel) do
           main_reset_fn do
             reset_common
-            reset_fragment_for_GOPATH
+            __unset("GOROOT")
           end
         end
       end
