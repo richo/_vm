@@ -1,14 +1,16 @@
 #!/usr/bin/env ruby
 
 require File.expand_path('../lib/manager', __FILE__)
+require File.expand_path('../contrib/installer', __FILE__)
 
 class Ruby < Manager
   include PosixProxy
 
   name "ruby"
-  set_prefix "_"
+  set_prefix ","
 
   include Plugin::List
+  include Contrib::Installer("ruby-build")
   # Needs to be included last of the main_case plugins
   include Plugin::Set
 
