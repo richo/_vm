@@ -45,7 +45,7 @@ class Manager
           r.and("^:").with("")
           r.and(":$").with("")
 
-          __export("PATH", r.exec("$PATH"))
+          __export(fragment_name, r.exec("$#{fragment_name}"))
         end
       end
     end
