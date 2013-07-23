@@ -45,6 +45,7 @@ If you don't want to pull in the ruby dependencies, you can fetch the current ve
 
 * ruby: https://raw.github.com/richo/_vm/latest/dist/_ruby
 * php: https://raw.github.com/richo/_vm/latest/dist/_php
+* go: https://raw.github.com/richo/_vm/latest/dist/_go
 * python: https://raw.github.com/richo/_vm/latest/dist/_python
 
 Which will always include the latest release.
