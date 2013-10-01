@@ -30,10 +30,12 @@ class Manager
     fragment = raw("${_#{@@name}_#{fragment_name}_fragment}")
     fragment_var = bare("_#{@@name}_#{fragment_name}_fragment")
 
-
     self.send(:define_method, (:"add_to_#{fragment_name}")) do |path|
       send(:"remove_fragment_from_#{fragment_name}")
-      __set(fragment_var, raw("#{fragment}:#{path}"))
+      __if(bare(%<[ -n "#{fragment}" ]>)) do |c|
+        c.then { __set(fragment_var, raw("#{fragment}:#{path}")) }
+        c.else { __set(fragment_var, raw("#{path}")) }
+      end
       send(:"add_fragment_to_#{fragment_name}")
     end
 
