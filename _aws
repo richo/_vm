@@ -1,0 +1,29 @@
+# vim: ft=ruby
+require File.expand_path('../lib/manager', __FILE__)
+
+class Aws < Manager
+
+  def root(type=nil)
+    if type == :var
+      raw("AWS_CREDENTIAL_FILE")
+    else
+      raw("$AWS_CREDENTIAL_FILE")
+    end
+  end
+
+  include PosixProxy
+
+  name "aws"
+  set_prefix "_"
+
+  include Plugin::List
+  # Needs to be included last of the main_case plugins
+  include Plugin::Set
+
+  include Plugin::AWS::Use
+  include Plugin::AWS::Reset
+
+end
+
+_aws = Aws.new
+_aws.build
