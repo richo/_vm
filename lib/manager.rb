@@ -115,8 +115,10 @@ class Manager
         c.when("-v|--version") do
           echo raw("_#{name} version #{UNDERSCORE_VM_VERSION}")
         end
-        c.when("system") do
-          __call("_#{name}_reset")
+        if self.respond_to? :__reset!
+          c.when("system") do
+            __reset!
+          end
         end
         @@plugins[:main_case].each do |plugin|
           self.send(plugin, c)

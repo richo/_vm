@@ -14,9 +14,11 @@ module Plugin::Use
   end
 
   def use_common
-    __if(__set?(root)) do |c|
-      c.then do
-        __call("_#{name}_reset")
+    if self.respond_to? :__reset!
+      __if(__set?(root)) do |c|
+        c.then do
+          __reset!
+        end
       end
     end
     __export(root(:var), args[1])
