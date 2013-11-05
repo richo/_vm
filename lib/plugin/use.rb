@@ -19,7 +19,7 @@ module Plugin::Use
         __call("_#{name}_reset")
       end
     end
-    __export("#{name}_ROOT", args[1])
+    __export(root(:var), args[1])
     add_to_PATH("${#{name}_ROOT}/bin")
   end
 end
