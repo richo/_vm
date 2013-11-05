@@ -16,7 +16,7 @@ class Aws < Manager
   name "aws"
   set_prefix "_"
 
-  include Plugin::List
+  include Plugin::AWS::List
   # Needs to be included last of the main_case plugins
   include Plugin::Set
 
