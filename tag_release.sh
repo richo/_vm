@@ -13,6 +13,7 @@ current_release=$(( $current_release + 1 ))
 
 git checkout HEAD^0
 
+unset _VM_USE_ZSH
 mkdir dist
 for i in $(git ls-files -- "_*"); do
     ruby $i > dist/$i

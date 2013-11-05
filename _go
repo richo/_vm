@@ -1,9 +1,13 @@
 #!/usr/bin/env ruby
 
 require File.expand_path('../lib/manager', __FILE__)
+require File.expand_path('../contrib/zsh', __FILE__)
 
 class Go < Manager
   include PosixProxy
+  if ENV['_VM_USE_ZSH']
+    include Contrib::ZSH
+  end
 
   name "go"
   create_fragment "GOPATH"
