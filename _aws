@@ -14,7 +14,6 @@ class Aws < Manager
   include PosixProxy
 
   name "aws"
-  set_prefix "_"
 
   include Plugin::AWS::List
   # Needs to be included last of the main_case plugins

@@ -6,7 +6,6 @@ class Php < Manager
   include PosixProxy
 
   name "php"
-  set_prefix "_"
 
   include Plugin::List
   # Needs to be included last of the main_case plugins

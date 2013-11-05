@@ -7,7 +7,6 @@ class Ruby < Manager
   include PosixProxy
 
   name "ruby"
-  set_prefix ","
 
   include Plugin::List
   include Contrib::Installer("ruby-build")
