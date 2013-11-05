@@ -6,9 +6,8 @@ module Plugin::Set
           for_all(name, "i") do
             __if(cmp(raw(basename raw("$i")), String).eq(args[1])) do |ci|
               ci.then do
-                shift
-                __call("_#{name}_use", raw("$i"), raw("$*"))
-                __return(raw("$?"))
+                __use!(raw("$i"))
+                __return(0)
               end
             end
           end
