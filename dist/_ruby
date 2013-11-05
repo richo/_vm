@@ -1,0 +1,94 @@
+_ruby() {
+  case "$1" in
+    -h|--help)
+      echo "usage: _ruby [version] [opts]"
+    ;;
+    -v|--version)
+      echo "_ruby version 0.0.9"
+    ;;
+    system)
+      if [ -n "${_ruby_PATH_fragment}" ]
+      then
+        export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _ruby_PATH_fragment=''
+      if [ -n "${ruby_ROOT}" ]
+      then
+        unset ruby_ROOT
+      fi
+      unset RUBYOPT
+      unset GEM_HOME
+      unset GEM_ROOT
+      unset GEM_PATH
+    ;;
+    "")
+      for i in ${__ruby_LIST}; do
+        if [ "$i" = "${ruby_ROOT}" ]
+        then
+          star='*'
+        else
+          star=' '
+        fi
+        echo " $star $(basename $i)"
+      done
+    ;;
+    install)
+      ruby-build "$1" "$2"
+    ;;
+    *)
+      for i in ${__ruby_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          if [ -n "${ruby_ROOT}" ]
+          then
+            if [ -n "${_ruby_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _ruby_PATH_fragment=''
+            if [ -n "${ruby_ROOT}" ]
+            then
+              unset ruby_ROOT
+            fi
+            unset RUBYOPT
+            unset GEM_HOME
+            unset GEM_ROOT
+            unset GEM_PATH
+          fi
+          export ruby_ROOT="$i"
+          if [ -n "${_ruby_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_ruby_PATH_fragment}" ]
+          then
+            _ruby_PATH_fragment="${_ruby_PATH_fragment}:${ruby_ROOT}/bin"
+          else
+            _ruby_PATH_fragment="${ruby_ROOT}/bin"
+          fi
+          export PATH="${_ruby_PATH_fragment}:${PATH}"
+          export RUBYOPT="$2"
+          if [ "$UID" -gt 0 ]
+          then
+            export GEM_HOME="$HOME/.gem/$(basename $i)"
+            export GEM_ROOT="$HOME/.gem/$(basename $i)"
+            export GEM_PATH="$HOME/.gem/$(basename $i)"
+            if [ -n "${_ruby_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            if [ -n "${_ruby_PATH_fragment}" ]
+            then
+              _ruby_PATH_fragment="${_ruby_PATH_fragment}:$HOME/.gem/$(basename $i)/bin"
+            else
+              _ruby_PATH_fragment="$HOME/.gem/$(basename $i)/bin"
+            fi
+            export PATH="${_ruby_PATH_fragment}:${PATH}"
+          fi
+          return 0
+        fi
+      done
+      echo "_ruby: unknown ruby: $1"
+    ;;
+  esac
+}
