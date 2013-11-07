@@ -13,7 +13,7 @@ module Contrib
     def setup_completion
       fn_name = "_#{name}_completer"
       __function(fn_name) do
-        __set("reply", bare("()"))
+        __set("reply", bare("(#{__defaults.map{ |d| __escapinate(d) }.join(" ")})"))
         for_all(name, "i") do
           __eval("reply+=($(basename $i))")
         end

@@ -18,6 +18,7 @@ class Aws < Manager
   end
 
   name "aws"
+  set_defaults []
 
   include Plugin::AWS::List
   # Needs to be included last of the main_case plugins

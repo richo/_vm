@@ -24,6 +24,7 @@ class Manager
   @@plugins = Hash.new { |h, k| h[k] = Array.new }
   @@name = nil
   @@prefix = "_"
+  @@defaults = ["system"]
 
   # include FragmentManager
   def self.create_fragment(fragment_name)
@@ -72,6 +73,14 @@ class Manager
     @@prefix = prefix
   end
 
+  def __defaults
+    @defaults
+  end
+
+  def self.set_defaults(defaults)
+    @@defaults = defaults
+  end
+
   def root(type=nil)
     if type == :var
       raw("#{name}_ROOT")
@@ -91,6 +100,7 @@ class Manager
   attr_reader :io
   def initialize(io=nil)
     @io = io
+    @defaults = @@defaults
     self.class.create_fragment("PATH")
   end
 
