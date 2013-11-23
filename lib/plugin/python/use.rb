@@ -7,6 +7,8 @@ module Plugin::Python
           __case(args[1]) do |ca|
             ca.when("jython*") do
               __export("JYTHON_HOME", raw("#{var}/libexec"))
+              # This may actually be broken for the general case
+              add_to_PYTHONPATH(raw("#{var}/libexec/Lib"))
             end
           end
 
