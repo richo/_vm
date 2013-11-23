@@ -4,6 +4,7 @@ module Plugin::Python
       super
       reset_fragment_for_PYTHONPATH
       __unset("JYTHON_HOME")
+      __unset("JYTHONPATH")
     end
   end
 end

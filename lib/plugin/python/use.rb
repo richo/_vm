@@ -9,6 +9,7 @@ module Plugin::Python
               __export("JYTHON_HOME", raw("#{var}/libexec"))
               # This may actually be broken for the general case
               add_to_PYTHONPATH(raw("#{var}/libexec/Lib"))
+              __export("JYTHONPATH", raw("$PYTHONPATH"))
             end
           end
 
