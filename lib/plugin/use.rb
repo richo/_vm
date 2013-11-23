@@ -8,6 +8,6 @@ module Plugin::Use
       end
     end
     __export(root(:var), var)
-    add_to_PATH("${#{name}_ROOT}/bin")
+    add_to_PATH("#{root}/bin")
   end
 end
