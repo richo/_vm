@@ -3,9 +3,7 @@ module Plugin::Ruby
     def __reset!
       super
       __unset("RUBYOPT")
-      __unset("GEM_HOME")
-      __unset("GEM_ROOT")
-      __unset("GEM_PATH")
+      reset_gem_paths!
     end
   end
 end

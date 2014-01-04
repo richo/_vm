@@ -12,6 +12,8 @@ class Ruby < Manager
 
   name "ruby"
 
+  include Plugin::Ruby::Gems
+
   include Plugin::List
   include Contrib::Installer("ruby-build")
   # Needs to be included last of the main_case plugins
