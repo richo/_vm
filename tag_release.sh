@@ -18,6 +18,9 @@ mkdir dist
 for i in $(git ls-files -- "_*"); do
     ruby $i > dist/$i
     [ $? -eq 0 ] || exit 1
+    zshbuild=$(echo $i | tr _ ,)
+    _VM_USE_ZSH=true ruby $i > dist/$zshbuild
+    [ $? -eq 0 ] || exit 1
 done
 git add dist
 git commit -m "Add dist files for ${release_series}${current_release}"
