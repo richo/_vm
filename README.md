@@ -51,6 +51,20 @@ If you don't want to pull in the ruby dependencies, you can fetch the current ve
 
 Which will always include the latest release.
 
+### ZSH
+
+The `_vm` generation process is aware of ZSH's existance. ZSH wants to use
+`_foo` as a completion function for `foo`, as such `_vm` spits out functions
+called `,foo`. Builds are linked below:
+
+* ruby: https://raw.github.com/richo/_vm/latest/dist/,ruby
+* php: https://raw.github.com/richo/_vm/latest/dist/,php
+* go: https://raw.github.com/richo/_vm/latest/dist/,go
+* python: https://raw.github.com/richo/_vm/latest/dist/,python
+* aws: https://raw.github.com/richo/_vm/latest/dist/,aws
+
+ZSH builds also include tab completion.
+
 # Contrib Modules
 
 There are examples, as well as optional modules you may want, included in the
