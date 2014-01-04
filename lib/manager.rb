@@ -125,6 +125,9 @@ class Manager
         c.when("-v|--version") do
           echo raw("_#{name} version #{UNDERSCORE_VM_VERSION}")
         end
+        c.when("-*|--*") do
+          echo raw("Unknown option #{args[1]}")
+        end
         if self.respond_to? :__reset!
           c.when("system") do
             __reset!
