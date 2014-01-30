@@ -11,7 +11,7 @@ module Plugin::Set
               end
             end
           end
-          echo raw("_#{name}: unknown #{name}: #{args[1]}")
+          echo raw("#{prefix}#{name}: unknown #{name}: #{args[1]}")
         end
       end
     end

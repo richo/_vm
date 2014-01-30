@@ -124,10 +124,10 @@ class Manager
     __function("#{@@prefix}#{name}") do
       __case(args[1]) do |c|
         c.when("-h|--help") do
-          echo raw("usage: _#{name} [version] [opts]")
+          echo raw("usage: #{prefix}#{name} [version] [opts]")
         end
         c.when("-v|--version") do
-          echo raw("_#{name} version #{UNDERSCORE_VM_VERSION}")
+          echo raw("#{prefix}#{name} version #{UNDERSCORE_VM_VERSION}")
         end
         c.when("-*|--*") do
           echo raw("Unknown option #{args[1]}")
