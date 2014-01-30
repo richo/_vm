@@ -73,6 +73,10 @@ class Manager
     @@prefix = prefix
   end
 
+  def prefix
+    @@prefix
+  end
+
   def __defaults
     @defaults
   end
