@@ -57,6 +57,10 @@ class Manager
       __export(fragment_name, raw("#{fragment}:${#{fragment_name}}"))
     end
 
+    self.send(:define_method, (:"with_fragment_in_#{fragment_name}")) do |f|
+      raw("#{f}:${#{fragment_name}}")
+    end
+
     self.send(:define_method, (:"reset_fragment_for_#{fragment_name}")) do
       send(:"remove_fragment_from_#{fragment_name}")
       __set(fragment_var, bare("''"))
