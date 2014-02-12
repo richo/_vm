@@ -3,8 +3,8 @@ _vm
 
 A generic version manager.
 
-Requires [shell-proxy][2] which is so alpha it's not even really published.
-Pull it down and stick it in your load path.
+Requires [shell-proxy][2] which is basically only used by _vm, so it's
+submoduled in for convenience to make development more straightforward.
 
 Currently you can either build it on the fly, or fetch prebuilt scripts (for
 example if your system doesn't have ruby)
