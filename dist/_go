@@ -1,0 +1,71 @@
+_go() {
+  case "$1" in
+    -h|--help)
+      echo "usage: _go [version] [opts]"
+    ;;
+    -v|--version)
+      echo "_go version 0.0.9"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      if [ -n "${_go_PATH_fragment}" ]
+      then
+        export PATH=$(echo "$PATH" | \sed -e "s|${_go_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _go_PATH_fragment=''
+      if [ -n "${go_ROOT}" ]
+      then
+        unset go_ROOT
+      fi
+      unset GOROOT
+    ;;
+    "")
+      for i in ${__go_LIST}; do
+        if [ "$i" = "${go_ROOT}" ]
+        then
+          star='*'
+        else
+          star=' '
+        fi
+        echo " $star $(basename $i)"
+      done
+    ;;
+    *)
+      for i in ${__go_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          if [ -n "${go_ROOT}" ]
+          then
+            if [ -n "${_go_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_go_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _go_PATH_fragment=''
+            if [ -n "${go_ROOT}" ]
+            then
+              unset go_ROOT
+            fi
+            unset GOROOT
+          fi
+          export go_ROOT="$i"
+          if [ -n "${_go_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_go_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_go_PATH_fragment}" ]
+          then
+            _go_PATH_fragment="${_go_PATH_fragment}:${go_ROOT}/bin"
+          else
+            _go_PATH_fragment="${go_ROOT}/bin"
+          fi
+          export PATH="${_go_PATH_fragment}:${PATH}"
+          export GOROOT="${go_ROOT}"
+          return 0
+        fi
+      done
+      echo "_go: unknown go: $1"
+    ;;
+  esac
+}
