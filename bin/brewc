@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+require File.expand_path('../../lib/manager', __FILE__)
+require File.expand_path('../../contrib/zsh', __FILE__)
+
+class BrewManager < Manager
+  include PosixProxy
+  if ENV['_VM_USE_ZSH']
+    include Contrib::ZSH
+  end
+
+  name ARGV[0]
+
+  include Plugin::List
+  # Needs to be included last of the main_case plugins
+  include Plugin::Set
+
+  include Plugin::Use
+  include Plugin::Reset
+end
+
+BrewManager.new.build

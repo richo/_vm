@@ -65,6 +65,28 @@ called `,foo`. Builds are linked below:
 
 ZSH builds also include tab completion.
 
+### Homebrew
+
+\_vm ships with a shell helper called `brew!` that will setup an ephemeral
+`_vm` helper in the current shell. It currently depends on some zsh specifics.
+
+You use it like:
+
+```
+# Somewhere in your init files:
+source ../path/to/_vm/contrib/brew.sh
+
+# Then in your shell
+prompt% brew! go
+# Assuming you've set _VM_USE_ZSH
+prompt% ,go
+   1.2.1
+prompt% ,go 1.2.1
+prompt% which go
+/usr/local/Cellar/go/1.2.1/bin/go
+prompt%
+```
+
 # Contrib Modules
 
 There are examples, as well as optional modules you may want, included in the
