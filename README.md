@@ -3,32 +3,23 @@ _vm
 
 A generic version manager.
 
-Requires [shell-proxy][2] which is basically only used by _vm, so it's
-submoduled in for convenience to make development more straightforward.
+Frustrated with the fragmentation of the *vm/*env ecosystem, I set out to write
+a framework for emitting targeted, pure shell codebases.
 
-Currently you can either build it on the fly, or fetch prebuilt scripts (for
-example if your system doesn't have ruby)
+My goals were:
 
-```bash
+* Extensibility
+* Code reuse
+* Ease of development, by abstracting away all the fiddly bits in writing posix code
 
-# I'm using my RVM rubies with _vm
-__ruby_LIST=~/.rvm/rubies/*
-# In zsh, I'd love to know how to do this in bash:
-emulate sh -c "`ruby _ruby`"
+# Should I use _vm?
 
-# Or if you don't want to be on the bleeding edge
-mkdir -p ~/.vm
-ruby _ruby > ~/.vm/_ruby
-# in ${SHELL}rc
-source ~/.vm/_ruby
+Do you want to manage more than one type of thing? If the answer is yes, then probably.
 
-# in a posix compatible sh
-
-eval "`ruby _ruby`"
-
-```
-If you want to rebuild _vm at runtime, you should install shell-proxy as a
-submodule, which _vm checks for before doing a (very expensive) rubygems lookup.
+\_vm's architecture means that bugs are more difficult to introduce, and easier
+to fix permantly, in the same way the Rails makes it easier to write lots of
+webapps with minimal code, \_vm makes it possible to generate lots of version
+managers with minimal code.
 
 # Installing
 
@@ -37,6 +28,13 @@ submodule, which _vm checks for before doing a (very expensive) rubygems lookup.
 ```bash
 __php_LIST=~/.php/versions/*
 __ruby_LIST=~/.rvm/rubies/*
+```
+
+Then simply source the relevant shell file:
+
+```bash
+source _php
+source _ruby
 ```
 
 If you don't want to pull in the ruby dependencies, you can fetch the current versions from
@@ -142,6 +140,35 @@ managers called `_foo` etc, however if you want to use something else
 (Especially on ZSH, which reserves `_foo` as the completion function for
 `foo`), you should consider changing the prefix in the manager to something
 else. I use `,`.
+
+# Development
+
+Requires [shell-proxy][2] which is basically only used by _vm, so it's
+submoduled in for convenience to make development more straightforward.
+
+Currently you can either build it on the fly, or fetch prebuilt scripts (for
+example if your system doesn't have ruby)
+
+```bash
+
+# I'm using my RVM rubies with _vm
+__ruby_LIST=~/.rvm/rubies/*
+# In zsh, I'd love to know how to do this in bash:
+emulate sh -c "`ruby _ruby`"
+
+# Or if you don't want to be on the bleeding edge
+mkdir -p ~/.vm
+ruby _ruby > ~/.vm/_ruby
+# in ${SHELL}rc
+source ~/.vm/_ruby
+
+# in a posix compatible sh
+
+eval "`ruby _ruby`"
+
+```
+If you want to rebuild _vm at runtime, you should install shell-proxy as a
+submodule, which _vm checks for before doing a (very expensive) rubygems lookup.
 
 # Other platforms
 
