@@ -21,6 +21,15 @@ to fix permantly, in the same way the Rails makes it easier to write lots of
 webapps with minimal code, \_vm makes it possible to generate lots of version
 managers with minimal code.
 
+### _vm vs rvm/chruby/pythonbrew/virtualenv
+
+_vm is pretty much entirely a drop in replacement for chruby (while the DSL is
+novel, the implementation is pretty much directly derived from chruby)
+
+I still use RVM to actually build my rubies, and _vm tends to work very well
+with virtualenv (Simply symlink to your virtualenvs from wherever you've told
+_vm to look for pythons)
+
 # Installing
 
 \_vm uses the environment variable `__name_LIST` (ie, `__php_LIST`) to find versions. in my .zshrc I have:
