@@ -14,8 +14,8 @@ class Rust < Manager
   # TODO : Setup LD_LOAD_PATH hacks for rlibs
   include Plugin::Set
 
-  include Plugin::Use
-  include Plugin::Reset
+  include Plugin::Rust::Use
+  include Plugin::Rust::Reset
 end
 
 _rust = Rust.new
