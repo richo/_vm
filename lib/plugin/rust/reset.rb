@@ -7,7 +7,7 @@ module Plugin::Rust
           __unset("DYLD_LIBRARY_PATH")
         end
         c.when("*") do
-          __export("LD_LIBRARY_PATH")
+          __unset("LD_LIBRARY_PATH")
         end
       end
     end
