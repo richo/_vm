@@ -1,0 +1,99 @@
+,rust() {
+  case "$1" in
+    -h|--help)
+      echo "usage: ,rust [version] [opts]"
+    ;;
+    -v|--version)
+      echo ",rust version 0.0.13"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      if [ -n "${_rust_PATH_fragment}" ]
+      then
+        export PATH=$(echo "$PATH" | \sed -e "s|${_rust_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _rust_PATH_fragment=''
+      if [ -n "${rust_ROOT}" ]
+      then
+        unset rust_ROOT
+      fi
+      case "$(uname -s)" in
+        Darwin)
+          unset DYLD_LIBRARY_PATH
+        ;;
+        *)
+          unset LD_LIBRARY_PATH
+        ;;
+      esac
+    ;;
+    "")
+      for i in ${__rust_LIST}; do
+        if [ "$i" = "${rust_ROOT}" ]
+        then
+          star='*'
+        else
+          star=' '
+        fi
+        echo " $star $(basename $i)"
+      done
+    ;;
+    *)
+      for i in ${__rust_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          if [ -n "${rust_ROOT}" ]
+          then
+            if [ -n "${_rust_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_rust_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _rust_PATH_fragment=''
+            if [ -n "${rust_ROOT}" ]
+            then
+              unset rust_ROOT
+            fi
+            case "$(uname -s)" in
+              Darwin)
+                unset DYLD_LIBRARY_PATH
+              ;;
+              *)
+                unset LD_LIBRARY_PATH
+              ;;
+            esac
+          fi
+          export rust_ROOT="$i"
+          if [ -n "${_rust_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_rust_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_rust_PATH_fragment}" ]
+          then
+            _rust_PATH_fragment="${_rust_PATH_fragment}:${rust_ROOT}/bin"
+          else
+            _rust_PATH_fragment="${rust_ROOT}/bin"
+          fi
+          export PATH="${_rust_PATH_fragment}:${PATH}"
+          case "$(uname -s)" in
+            Darwin)
+              export DYLD_LIBRARY_PATH="$i/lib"
+            ;;
+            *)
+              export LD_LIBRARY_PATH="$i/lib"
+            ;;
+          esac
+          return 0
+        fi
+      done
+      echo ",rust: unknown rust: $1"
+    ;;
+  esac
+}
+_rust_completer() {
+  reply=('system')
+  for i in ${__rust_LIST}; do
+    reply+=($(basename $i))
+  done
+}
+compctl -K _rust_completer ,rust
