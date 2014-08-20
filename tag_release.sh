@@ -9,7 +9,13 @@ for tag in `git tag`; do
     [ $this_tag -gt $current_release ] && current_release=$this_tag
 done
 
+last_release="${current_release}"
 current_release=$(( $current_release + 1 ))
+
+if git grep "${last_release}" > /dev/null; then
+    echo "You haven't bumped the version!"
+    exit 1
+fi
 
 git checkout HEAD^0
 
