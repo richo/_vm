@@ -3,6 +3,7 @@ module Plugin::Ruby
     def __reset!
       super
       __unset("RUBYOPT")
+      reset_fragment_for_GEM_PATH
       reset_gem_paths!
     end
   end

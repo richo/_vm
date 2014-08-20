@@ -3,13 +3,23 @@ module Plugin::Ruby
     def set_gem_paths!(path)
       __export("GEM_HOME", path)
       __export("GEM_ROOT", path)
-      __export("GEM_PATH", path)
     end
 
     def reset_gem_paths!
       __unset("GEM_HOME")
       __unset("GEM_ROOT")
-      __unset("GEM_PATH")
+    end
+
+    def self.included(mod)
+      if mod.is_a? Class
+        mod.create_fragment("GEM_PATH")
+
+        mod.add_hook(:toplevel) do
+          __function(ns("#{prefix}gem", "add")) do
+            add_to_GEM_PATH args[1]
+          end
+        end
+      end
     end
   end
 end
