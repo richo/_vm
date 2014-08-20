@@ -24,6 +24,7 @@ class Manager
   @@plugins = Hash.new { |h, k| h[k] = Array.new }
   @@name = nil
   @@prefix = "_"
+  @@seperator = "_"
   @@defaults = ["system"]
 
   # include FragmentManager
@@ -77,8 +78,21 @@ class Manager
     @@prefix = prefix
   end
 
+  def self.set_seperator(seperator)
+    @@seperator = seperator
+  end
+
   def prefix
     @@prefix
+  end
+
+  def seperator
+    @@seperator
+  end
+
+  # Helper for namespaced functions
+  def ns(*paths)
+    paths.join(seperator)
   end
 
   def __defaults

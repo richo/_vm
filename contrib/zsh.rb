@@ -3,6 +3,8 @@ module Contrib
     def self.included(mod)
       prefix = ","
       mod.set_prefix prefix
+      seperator = "::"
+      mod.set_seperator seperator
 
       mod.add_hook(:toplevel) do
         completer_fn = setup_completion
