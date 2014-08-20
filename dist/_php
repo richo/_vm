@@ -1,0 +1,68 @@
+_php() {
+  case "$1" in
+    -h|--help)
+      echo "usage: _php [version] [opts]"
+    ;;
+    -v|--version)
+      echo "_php version 0.0.16"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      if [ -n "${_php_PATH_fragment}" ]
+      then
+        export PATH=$(echo "$PATH" | \sed -e "s|${_php_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _php_PATH_fragment=''
+      if [ -n "${php_ROOT}" ]
+      then
+        unset php_ROOT
+      fi
+    ;;
+    "")
+      for i in ${__php_LIST}; do
+        if [ "$i" = "${php_ROOT}" ]
+        then
+          star='*'
+        else
+          star=' '
+        fi
+        echo " $star $(basename $i)"
+      done
+    ;;
+    *)
+      for i in ${__php_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          if [ -n "${php_ROOT}" ]
+          then
+            if [ -n "${_php_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_php_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _php_PATH_fragment=''
+            if [ -n "${php_ROOT}" ]
+            then
+              unset php_ROOT
+            fi
+          fi
+          export php_ROOT="$i"
+          if [ -n "${_php_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_php_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_php_PATH_fragment}" ]
+          then
+            _php_PATH_fragment="${_php_PATH_fragment}:${php_ROOT}/bin"
+          else
+            _php_PATH_fragment="${php_ROOT}/bin"
+          fi
+          export PATH="${_php_PATH_fragment}:${PATH}"
+          return 0
+        fi
+      done
+      echo "_php: unknown php: $1"
+    ;;
+  esac
+}
