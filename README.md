@@ -114,43 +114,38 @@ _ruby prompt # "system" or "2.0.0-p195" etc
 
 # Current Status
 
-Currently, I've implemented a version manager for ruby. You can get it by
-running the `_ruby` script.
+It's at the point where the framework mostly works. There are also a few really
+useful plugins for other languages.
 
-It works like this:
+A really quick tour:
 
 ```
-elektra ⚡ _ruby
-   default
-   jruby-1.7.0
-   rbx-head
-   ruby-1.9.3-p194
-   ruby-1.9.3-p286
-   ruby-1.9.3-p327
-   ruby-1.9.3-p374
-   topaz-head
-elektra ⚡ ruby -v
-ruby 1.8.7 (2012-02-08 patchlevel 358) [universal-darwin12.0]
-elektra ⚡ _ruby ruby-1.9.3-p327
-elektra ⚡ ruby -v
-ruby 1.9.3p327 (2012-11-10 revision 37606) [x86_64-darwin12.2.1]
-elektra ⚡ _ruby
-   default
-   jruby-1.7.0
-   rbx-head
-   ruby-1.9.3-p194
-   ruby-1.9.3-p286
- * ruby-1.9.3-p327
-   ruby-1.9.3-p374
-   topaz-head
-elektra ⚡
+xenia % ,rust system
+xenia % ,ruby system
+xenia % echo $DYLD_LIBRARY_PATH
+
+xenia % ,rust 0.11.0-2eb3ab1
+xenia % echo $DYLD_LIBRARY_PATH
+/Users/richo/.rusts/0.11.0-2eb3ab1/lib
+xenia % ,ruby 2.0.0
+xenia % echo $GEM_PATH
+/Users/richo/.gem/2.0.0:
+xenia % ,gem::add ~/code/some-dev-gem
+xenia % echo $GEM_PATH
+/Users/richo/.gem/2.0.0:/Users/richo/code/some-dev-gem:
+xenia % which nmap
+/usr/local/bin/nmap
+xenia % brew! nmap
+xenia % ,nmap
+   6.46
+xenia % ,nmap 6.46
+xenia % which nmap
+/usr/local/Cellar/nmap/6.46/bin/nmap
+xenia %
 ```
 
-The scripts that ship with `_vm` will use `_` as the prefix, in order to expose
-managers called `_foo` etc, however if you want to use something else
-(Especially on ZSH, which reserves `_foo` as the completion function for
-`foo`), you should consider changing the prefix in the manager to something
-else. I use `,`.
+You'll notice that I'm using the prefix `,`. You can either set this directly
+in your managers, or the ZSH contrib module will use `,` by default.
 
 # Development
 
