@@ -3,7 +3,6 @@ module Plugin::List
     if mod.is_a? Class
       mod.add_hook(:main_case) do |c|
         c.when("") do
-          bare("star")
           for_all(name, "i") do
             __if(cmp(raw("$i"), String).eq(root)) do |ci|
               ci.then do
