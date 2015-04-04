@@ -10,6 +10,7 @@ class Rust < Manager
   name "rust"
 
   include Plugin::List
+  include Plugin::Rust::Doc;
   # Needs to be included last of the main_case plugins
   # TODO : Setup LD_LOAD_PATH hacks for rlibs
   include Plugin::Set
