@@ -6,7 +6,7 @@ module Plugin::Rust
         c.when("Darwin") do
           __unset("DYLD_LIBRARY_PATH")
         end
-        c.when("*") do
+        c.else do
           __unset("LD_LIBRARY_PATH")
         end
       end

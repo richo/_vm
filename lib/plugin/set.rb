@@ -2,7 +2,7 @@ module Plugin::Set
   def self.included(mod)
     if mod.is_a? Class
       mod.add_hook(:main_case) do |c|
-        c.when("*") do
+        c.else do
           for_all(name, "i") do
             __if(cmp(raw(basename raw("$i")), String).eq(args[1])) do |ci|
               ci.then do

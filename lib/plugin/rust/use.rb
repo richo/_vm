@@ -7,7 +7,7 @@ module Plugin::Rust
         c.when("Darwin") do
           __export("DYLD_LIBRARY_PATH", path)
         end
-        c.when("*") do
+        c.else do
           __export("LD_LIBRARY_PATH", path)
         end
       end
