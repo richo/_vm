@@ -3,7 +3,7 @@ if File.exists?(shell_proxy_path = File.expand_path("../../shell-proxy/lib", __F
 end
 require 'shell-proxy'
 
-UNDERSCORE_VM_VERSION = "0.0.16"
+UNDERSCORE_VM_VERSION = "0.0.17"
 
 module Plugin
   def self.uuid
