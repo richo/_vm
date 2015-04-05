@@ -1,0 +1,44 @@
+,aws() {
+  case "$1" in
+    -h|--help)
+      echo "usage: ,aws [version] [opts]"
+    ;;
+    -v|--version)
+      echo ",aws version 0.0.17"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      unset AWS_CREDENTIAL_FILE
+    ;;
+    "")
+      for i in ${__aws_LIST}; do
+        if [ "$i/credentials" = "$AWS_CREDENTIAL_FILE" ]
+        then
+          star='*'
+        else
+          star=' '
+        fi
+        echo " $star $(basename $i)"
+      done
+    ;;
+    *)
+      for i in ${__aws_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          export AWS_CREDENTIAL_FILE="$i/credentials"
+          return 0
+        fi
+      done
+      echo ",aws: unknown aws: $1"
+    ;;
+  esac
+}
+_aws_completer() {
+  reply=()
+  for i in ${__aws_LIST}; do
+    reply+=($(basename $i))
+  done
+}
+compctl -K _aws_completer ,aws
