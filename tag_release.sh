@@ -31,7 +31,7 @@ done
 git add dist
 git commit -m "Add dist files for ${release_series}${current_release}"
 
-git tag -s ${release_series}${current_release} -m "Release ${release_series}${current_release}"
+git tag -u BA4DACAA -s ${release_series}${current_release} -m "Release ${release_series}${current_release}"
 git update-ref refs/heads/latest HEAD
 
 cat <<EOF
