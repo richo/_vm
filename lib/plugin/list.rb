@@ -4,15 +4,20 @@ module Plugin::List
       mod.add_hook(:main_case) do |c|
         c.when("") do
           for_all(name, "i") do
-            __if(cmp(raw("$i"), String).eq(root)) do |ci|
-              ci.then do
-                __set('star', "*")
+            comparator = FSComparator.new
+            __if(comparator.directory?(raw("$i"))) do |f|
+              f.then do
+              __if(cmp(raw("$i"), String).eq(root)) do |ci|
+                ci.then do
+                  __set('star', "*")
+                end
+                ci.else do
+                  __set('star', " ")
+                end
+                end
+              echo raw(' $star $(basename $i)')
               end
-              ci.else do
-                __set('star', " ")
-              end
-              end
-            echo raw(' $star $(basename $i)')
+            end
           end
         end
       end
