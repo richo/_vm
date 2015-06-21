@@ -1,0 +1,135 @@
+,ruby() {
+  case "$1" in
+    -h|--help)
+      echo "usage: ,ruby [version] [opts]"
+    ;;
+    -v|--version)
+      echo ",ruby version 0.0.18"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      if [ -n "${_ruby_PATH_fragment}" ]
+      then
+        export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _ruby_PATH_fragment=''
+      if [ -n "${ruby_ROOT}" ]
+      then
+        unset ruby_ROOT
+      fi
+      unset RUBYOPT
+      if [ -n "${_ruby_GEM_PATH_fragment}" ]
+      then
+        export GEM_PATH=$(echo "$GEM_PATH" | \sed -e "s|${_ruby_GEM_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _ruby_GEM_PATH_fragment=''
+      unset GEM_HOME
+      unset GEM_ROOT
+    ;;
+    "")
+      for i in ${__ruby_LIST}; do
+        if [ -d "$i" ]
+        then
+          if [ "$i" = "${ruby_ROOT}" ]
+          then
+            star='*'
+          else
+            star=' '
+          fi
+          echo " $star $(basename $i)"
+        fi
+      done
+    ;;
+    install)
+      ruby-build "$2" "$3"
+    ;;
+    *)
+      for i in ${__ruby_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          if [ -n "${ruby_ROOT}" ]
+          then
+            if [ -n "${_ruby_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _ruby_PATH_fragment=''
+            if [ -n "${ruby_ROOT}" ]
+            then
+              unset ruby_ROOT
+            fi
+            unset RUBYOPT
+            if [ -n "${_ruby_GEM_PATH_fragment}" ]
+            then
+              export GEM_PATH=$(echo "$GEM_PATH" | \sed -e "s|${_ruby_GEM_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _ruby_GEM_PATH_fragment=''
+            unset GEM_HOME
+            unset GEM_ROOT
+          fi
+          export ruby_ROOT="$i"
+          if [ -n "${_ruby_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_ruby_PATH_fragment}" ]
+          then
+            _ruby_PATH_fragment="${_ruby_PATH_fragment}:${ruby_ROOT}/bin"
+          else
+            _ruby_PATH_fragment="${ruby_ROOT}/bin"
+          fi
+          export PATH="${_ruby_PATH_fragment}:${PATH}"
+          export RUBYOPT="$2"
+          export GEM_HOME="$HOME/.gem/$(basename $i)"
+          export GEM_ROOT="$HOME/.gem/$(basename $i)"
+          if [ -n "${_ruby_GEM_PATH_fragment}" ]
+          then
+            export GEM_PATH=$(echo "$GEM_PATH" | \sed -e "s|${_ruby_GEM_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_ruby_GEM_PATH_fragment}" ]
+          then
+            _ruby_GEM_PATH_fragment="${_ruby_GEM_PATH_fragment}:$HOME/.gem/$(basename $i)"
+          else
+            _ruby_GEM_PATH_fragment="$HOME/.gem/$(basename $i)"
+          fi
+          export GEM_PATH="${_ruby_GEM_PATH_fragment}:${GEM_PATH}"
+          if [ -n "${_ruby_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_ruby_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_ruby_PATH_fragment}" ]
+          then
+            _ruby_PATH_fragment="${_ruby_PATH_fragment}:$HOME/.gem/$(basename $i)/bin"
+          else
+            _ruby_PATH_fragment="$HOME/.gem/$(basename $i)/bin"
+          fi
+          export PATH="${_ruby_PATH_fragment}:${PATH}"
+          return 0
+        fi
+      done
+      echo ",ruby: unknown ruby: $1"
+    ;;
+  esac
+}
+_ruby_completer() {
+  reply=('system')
+  for i in ${__ruby_LIST}; do
+    reply+=($(basename $i))
+  done
+}
+compctl -K _ruby_completer ,ruby
+,gem::add() {
+  if [ -n "${_ruby_GEM_PATH_fragment}" ]
+  then
+    export GEM_PATH=$(echo "$GEM_PATH" | \sed -e "s|${_ruby_GEM_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+  fi
+  if [ -n "${_ruby_GEM_PATH_fragment}" ]
+  then
+    _ruby_GEM_PATH_fragment="${_ruby_GEM_PATH_fragment}:$1"
+  else
+    _ruby_GEM_PATH_fragment="$1"
+  fi
+  export GEM_PATH="${_ruby_GEM_PATH_fragment}:${GEM_PATH}"
+}
