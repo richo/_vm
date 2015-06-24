@@ -26,9 +26,9 @@ managers with minimal code.
 _vm is pretty much entirely a drop in replacement for chruby (while the DSL is
 novel, the implementation is pretty much directly derived from chruby)
 
-I still use RVM to actually build my rubies, and _vm tends to work very well
-with virtualenv (Simply symlink to your virtualenvs from wherever you've told
-_vm to look for pythons)
+By virtue of it's hands off nature, it can play very well with other
+ecosystems. For example symlinking virtualenvs or homebrew builds into your
+root directory will Just Work.
 
 # Installing
 
