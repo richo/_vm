@@ -1,0 +1,22 @@
+require File.expand_path('../lib/manager', __FILE__)
+require File.expand_path('../contrib/zsh', __FILE__)
+
+class Afl < Manager
+  include PosixProxy
+  if ENV['_VM_USE_ZSH']
+    include Contrib::ZSH
+  end
+
+  name "afl"
+
+  include Plugin::List
+
+  # Needs to be included last of the main_case plugins
+  include Plugin::Set
+
+  include Plugin::Afl::Use
+  include Plugin::Reset
+end
+
+_afl = Afl.new
+_afl.build
