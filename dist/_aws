@@ -1,0 +1,37 @@
+_aws() {
+  case "$1" in
+    -h|--help)
+      echo "usage: _aws [version] [opts]"
+    ;;
+    -v|--version)
+      echo "_aws version 0.0.19"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      unset AWS_CREDENTIAL_FILE
+    ;;
+    "")
+      for i in ${__aws_LIST}; do
+        if [ "$i/credentials" = "$AWS_CREDENTIAL_FILE" ]
+        then
+          star='*'
+        else
+          star=' '
+        fi
+        echo " $star $(basename $i)"
+      done
+    ;;
+    *)
+      for i in ${__aws_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          export AWS_CREDENTIAL_FILE="$i/credentials"
+          return 0
+        fi
+      done
+      echo "_aws: unknown aws: $1"
+    ;;
+  esac
+}

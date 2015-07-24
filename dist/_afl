@@ -1,0 +1,71 @@
+_afl() {
+  case "$1" in
+    -h|--help)
+      echo "usage: _afl [version] [opts]"
+    ;;
+    -v|--version)
+      echo "_afl version 0.0.19"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      if [ -n "${_afl_PATH_fragment}" ]
+      then
+        export PATH=$(echo "$PATH" | \sed -e "s|${_afl_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _afl_PATH_fragment=''
+      if [ -n "${afl_ROOT}" ]
+      then
+        unset afl_ROOT
+      fi
+    ;;
+    "")
+      for i in ${__afl_LIST}; do
+        if [ -d "$i" ]
+        then
+          if [ "$i" = "${afl_ROOT}" ]
+          then
+            star='*'
+          else
+            star=' '
+          fi
+          echo " $star $(basename $i)"
+        fi
+      done
+    ;;
+    *)
+      for i in ${__afl_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          if [ -n "${afl_ROOT}" ]
+          then
+            if [ -n "${_afl_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_afl_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _afl_PATH_fragment=''
+            if [ -n "${afl_ROOT}" ]
+            then
+              unset afl_ROOT
+            fi
+          fi
+          export afl_ROOT="$i"
+          if [ -n "${_afl_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_afl_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_afl_PATH_fragment}" ]
+          then
+            _afl_PATH_fragment="${_afl_PATH_fragment}:${afl_ROOT}"
+          else
+            _afl_PATH_fragment="${afl_ROOT}"
+          fi
+          export PATH="${_afl_PATH_fragment}:${PATH}"
+          return 0
+        fi
+      done
+      echo "_afl: unknown afl: $1"
+    ;;
+  esac
+}

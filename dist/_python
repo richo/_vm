@@ -1,0 +1,116 @@
+_python() {
+  case "$1" in
+    -h|--help)
+      echo "usage: _python [version] [opts]"
+    ;;
+    -v|--version)
+      echo "_python version 0.0.19"
+    ;;
+    -*|--*)
+      echo "Unknown option $1"
+    ;;
+    system)
+      if [ -n "${_python_PATH_fragment}" ]
+      then
+        export PATH=$(echo "$PATH" | \sed -e "s|${_python_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _python_PATH_fragment=''
+      if [ -n "${python_ROOT}" ]
+      then
+        unset python_ROOT
+      fi
+      if [ -n "${_python_PYTHONPATH_fragment}" ]
+      then
+        export PYTHONPATH=$(echo "$PYTHONPATH" | \sed -e "s|${_python_PYTHONPATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+      fi
+      _python_PYTHONPATH_fragment=''
+      unset JYTHON_HOME
+      unset JYTHONPATH
+    ;;
+    "")
+      for i in ${__python_LIST}; do
+        if [ -d "$i" ]
+        then
+          if [ "$i" = "${python_ROOT}" ]
+          then
+            star='*'
+          else
+            star=' '
+          fi
+          echo " $star $(basename $i)"
+        fi
+      done
+    ;;
+    *)
+      for i in ${__python_LIST}; do
+        if [ "$(basename $i)" = "$1" ]
+        then
+          if [ -n "${python_ROOT}" ]
+          then
+            if [ -n "${_python_PATH_fragment}" ]
+            then
+              export PATH=$(echo "$PATH" | \sed -e "s|${_python_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _python_PATH_fragment=''
+            if [ -n "${python_ROOT}" ]
+            then
+              unset python_ROOT
+            fi
+            if [ -n "${_python_PYTHONPATH_fragment}" ]
+            then
+              export PYTHONPATH=$(echo "$PYTHONPATH" | \sed -e "s|${_python_PYTHONPATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            _python_PYTHONPATH_fragment=''
+            unset JYTHON_HOME
+            unset JYTHONPATH
+          fi
+          export python_ROOT="$i"
+          if [ -n "${_python_PATH_fragment}" ]
+          then
+            export PATH=$(echo "$PATH" | \sed -e "s|${_python_PATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+          fi
+          if [ -n "${_python_PATH_fragment}" ]
+          then
+            _python_PATH_fragment="${_python_PATH_fragment}:${python_ROOT}/bin"
+          else
+            _python_PATH_fragment="${python_ROOT}/bin"
+          fi
+          export PATH="${_python_PATH_fragment}:${PATH}"
+          if [ "$UID" -gt 0 ]
+          then
+            case "$1" in
+              jython*)
+                export JYTHON_HOME="$i/libexec"
+                if [ -n "${_python_PYTHONPATH_fragment}" ]
+                then
+                  export PYTHONPATH=$(echo "$PYTHONPATH" | \sed -e "s|${_python_PYTHONPATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+                fi
+                if [ -n "${_python_PYTHONPATH_fragment}" ]
+                then
+                  _python_PYTHONPATH_fragment="${_python_PYTHONPATH_fragment}:$i/libexec/Lib"
+                else
+                  _python_PYTHONPATH_fragment="$i/libexec/Lib"
+                fi
+                export PYTHONPATH="${_python_PYTHONPATH_fragment}:${PYTHONPATH}"
+                export JYTHONPATH="$PYTHONPATH"
+              ;;
+            esac
+            if [ -n "${_python_PYTHONPATH_fragment}" ]
+            then
+              export PYTHONPATH=$(echo "$PYTHONPATH" | \sed -e "s|${_python_PYTHONPATH_fragment}||" -e "s|::|:|" -e "s|^:||" -e "s|:$||")
+            fi
+            if [ -n "${_python_PYTHONPATH_fragment}" ]
+            then
+              _python_PYTHONPATH_fragment="${_python_PYTHONPATH_fragment}:$HOME/.pip/$(basename $i)"
+            else
+              _python_PYTHONPATH_fragment="$HOME/.pip/$(basename $i)"
+            fi
+            export PYTHONPATH="${_python_PYTHONPATH_fragment}:${PYTHONPATH}"
+          fi
+          return 0
+        fi
+      done
+      echo "_python: unknown python: $1"
+    ;;
+  esac
+}
