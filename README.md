@@ -56,6 +56,7 @@ If you don't want to pull in the ruby dependencies, you can fetch the current ve
 * python: https://raw.github.com/richo/_vm/latest/dist/_python
 * aws: https://raw.github.com/richo/_vm/latest/dist/_aws
 * rust: https://raw.github.com/richo/_vm/latest/dist/_rust
+* afl: https://raw.github.com/richo/_vm/latest/dist/_afl
 
 Which will always include the latest release.
 
@@ -71,6 +72,7 @@ called `,foo`. Builds are linked below:
 * python: https://raw.github.com/richo/_vm/latest/dist/,python
 * aws: https://raw.github.com/richo/_vm/latest/dist/,aws
 * rust: https://raw.github.com/richo/_vm/latest/dist/,rust
+* afl: https://raw.github.com/richo/_vm/latest/dist/,afl
 
 ZSH builds also include tab completion.
 
